@@ -19,16 +19,35 @@ private:
     Grid<T>& operator=(Grid<T>&&) = delete;
 
 public:
+
     /*
-    Grid<T>(const Grid<T>& g)
+    Grid<T>(Grid<T> const &scr) //заготовка копирующего конструктора (чтобы работал нужно убрать const)
     {
-       data = new T[g.y_size*g.x_size];
-       y_size = g.y_size;
-       x_size = g.x_size;
-       for()
+        data = new T[scr.y_size*scr.x_size];
+        y_size = scr.y_size;
+        x_size = scr.x_size;
+        for(size_type y = 0; y < y_size; y++)
+            for(size_type x = 0; x < x_size; x++)
+                *(data + y*x_size +x) = scr[y][x];
+
     }
-    //заготовка копирующего конструктора
     */
+
+    /*Grid<T>& operator= (Grid<T> const &scr) //заготовка оператора копирующего присваивания (чтобы работал нужно убрать const)
+    {
+        T * new_data = new T[scr.y_size*scr.x_size];
+        for(size_type y = 0; y < scr.y_size; y++)
+            for(size_type x = 0; x < scr.x_size; x++)
+                *(new_data + y*scr.x_size +x) = scr[y][x];
+        delete [] data;
+        data = new_data;
+        y_size = scr.y_size;
+        x_size = scr.x_size;
+        return *this;
+
+    }
+    */
+
 
     Grid<T>(T const &t): y_size(1), x_size(1), data(new T[1]) //1.1
     {
