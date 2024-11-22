@@ -49,24 +49,35 @@ public:
     */
 
 
-    Grid<T>(T const &t): y_size(1), x_size(1), data(new T[1]) //1.1
+    Grid<T>(T const &t): y_size(1), x_size(1), data(reinterpret_cast<T*>(operator new(sizeof(T)))) //1.1
     {
-        *data = t;
+        new (data) T(t);
     }
 
-    Grid<T>(size_type y_size, size_type x_size): y_size(y_size), x_size(x_size), data(new T[y_size*x_size]) //1.2
+
+    /*
+    Grid<T>(size_type y_size, size_type x_size): y_size(y_size), x_size(x_size), data(new T[y_size*x_size)) //1.2
     {
         for(size_type i=0; i < y_size*x_size; ++i)
         {
             *(data+i) = T();
         }
     }
+    */
 
-    Grid<T>(size_type y_size, size_type x_size, T const &t): y_size(y_size), x_size(x_size), data(new T[y_size*x_size]) //1.3
+    Grid<T>(size_type y_size, size_type x_size): y_size(y_size), x_size(x_size), data(reinterpret_cast<T*>(operator new(sizeof(T)*y_size*x_size))) //1.2
     {
         for(size_type i=0; i < y_size*x_size; ++i)
         {
-            *(data+i) = t;
+            new (data+i) T();
+        }
+    }
+
+    Grid<T>(size_type y_size, size_type x_size, T const &t): y_size(y_size), x_size(x_size), data(reinterpret_cast<T*>(operator new(sizeof(T)*y_size*x_size))) //1.3
+    {
+        for(size_type i=0; i < y_size*x_size; ++i)
+        {
+            new (data+i) T(t);
         }
     }
 
@@ -110,6 +121,10 @@ public:
 
     ~Grid<T>()
     {
+        for(size_type i = 0; i < y_size*x_size; ++i)
+        {
+            (*(data+i)).~T();
+        }
         delete [] data;
     }
 };
