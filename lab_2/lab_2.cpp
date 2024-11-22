@@ -18,7 +18,7 @@ private:
 
 public:
 
-    Grid<T>(Grid<T> const &scr) // задание 2 копирующий конструктор
+    Grid<T>(Grid<T> const &scr) // задание 1 копирующий конструктор
     {
         y_size = scr.y_size;
         x_size = scr.x_size;
@@ -30,7 +30,7 @@ public:
     }
 
 
-    Grid<T>& operator= (Grid<T> const &scr) //задание 2 оператор копирующего присваивания
+    Grid<T>& operator= (Grid<T> const &scr) //задание 1 оператор копирующего присваивания
     {
         T *new_data = reinterpret_cast<T*>(operator new(sizeof(T)*scr.y_size*scr.x_size));
         for(size_type y = 0; y < scr.y_size; y++)
