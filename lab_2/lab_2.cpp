@@ -13,8 +13,8 @@ private:
 
     Grid(T *data, size_type y_size, size_type x_size): data(data), y_size(y_size), x_size(x_size) {}
 
-    //Grid(Grid<T>&&) = delete;
-    //Grid<T>& operator=(Grid<T>&&) = delete;
+    Grid(Grid<T>&&) = delete;
+    Grid<T>& operator=(Grid<T>&&) = delete;
 
 public:
 
